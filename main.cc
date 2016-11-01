@@ -4,6 +4,7 @@
 #include <cassert>
 #include <vector>
 #include <sstream>
+#include <random>
 
 namespace io
 {
@@ -80,14 +81,37 @@ namespace rps
 
     struct game
     {
+        game()
+         : _gen(_rd()),
+           _rng(0, 3)
+        {}
+
+        void play()
+        {
+            symbol hum_sym = read_symbol();
+
+
+            int r = _rng(_gen);
+            std::cout << r << std::endl;
+             r = _rng(_gen);
+            std::cout << r << std::endl;
+             r = _rng(_gen);
+            std::cout << r << std::endl;
+
+            symbol ai_sym = read_symbol();
+        }
 
 
         int get_scope_ai() const { return _score_ai; }
         int get_scope_hum() const { return _score_hum; }
 
     private:
-        int _score_ai;
-        int _score_hum;
+        int _score_ai = 0;
+        int _score_hum = 0;
+
+        std::random_device _rd;
+        std::mt19937 _gen;
+        std::uniform_int_distribution<> _rng;
     };
 
 }
@@ -97,7 +121,8 @@ int main()
     for (bool play = true; play; )
     {
         rps::game g;
-       // rps::symbol sym = rps::io::read_symbol();
+        g.play();
+
         play = io::play_again();
     }
 
