@@ -42,10 +42,6 @@ namespace io
 }
 
 
-
-
-
-
 namespace rps
 {
 
@@ -55,12 +51,6 @@ namespace rps
         paper,
         scissors,
     };
-
-    inline std::ostream& operator<<(std::ostream& oss, symbol sym)
-    {
-        // TODO
-        return oss << "?";
-    }
 
     symbol to_symbol(char sym)
     {
