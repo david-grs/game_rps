@@ -123,8 +123,8 @@ namespace rps
             std::cout << p.second << std::endl;
         }
 
-        int get_scope_ai() const { return _score_ai; }
-        int get_scope_hum() const { return _score_hum; }
+        int get_score_ai() const  { return _score_ai; }
+        int get_score_hum() const { return _score_hum; }
 
     private:
 
@@ -140,13 +140,15 @@ namespace rps
 
 int main()
 {
+    rps::game g;
+
     for (bool play = true; play; )
     {
-        rps::game g;
         g.play();
-
         play = io::play_again();
     }
+
+    std::cout << "\nfinal score: human: " << g.get_score_hum() << " --- ai: " << g.get_score_ai() << std::endl;
 
     return 0;
 }
