@@ -37,45 +37,58 @@ namespace io
     {
         return read_one_of("play again?", {'y', 'n'}) == 'y';
     }
-    
+
 }
+
+
+
+
+
 
 namespace rps
 {
 
-enum struct symbol
-{
-    rock,
-    scissors,
-    paper
-};
+    enum struct symbol
+    {
+        rock,
+        paper,
+        scissors,
+    };
 
-inline std::ostream& operator<<(std::ostream& oss, symbol sym)
-{
-    // TODO
-    return oss << "?";
-}
+    inline std::ostream& operator<<(std::ostream& oss, symbol sym)
+    {
+        // TODO
+        return oss << "?";
+    }
 
-namespace io
-{
+    symbol to_symbol(char sym)
+    {
+        switch(sym)
+        {
+        case 'r': return symbol::rock;
+        case 'p': return symbol::paper;
+        case 's': return symbol::scissors;
+        default: throw std::runtime_error("unknown symbol: " + sym);
+        }
+    }
+
     static symbol read_symbol()
     {
-        std::cout << "rock, paper, scissors? [r/p/s] ";
-        return {};
+        char s = io::read_one_of("rock, paper, scissors... ?", {'r', 'p', 's'});
+        return to_symbol(s);
     }
-}
 
-struct game
-{
+    struct game
+    {
 
 
-    int get_scope_ai() const { return _score_ai; }
-    int get_scope_hum() const { return _score_hum; }
+        int get_scope_ai() const { return _score_ai; }
+        int get_scope_hum() const { return _score_hum; }
 
-private:
-    int _score_ai;
-    int _score_hum;
-};
+    private:
+        int _score_ai;
+        int _score_hum;
+    };
 
 }
 
