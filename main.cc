@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 
 namespace io
 {
@@ -32,6 +33,14 @@ inline std::ostream& operator<<(std::ostream& oss, symbol sym)
     return oss << "?";
 }
 
+namespace io
+{
+    static symbol read_symbol()
+    {
+        return {};
+    }
+}
+
 struct game
 {
 
@@ -51,6 +60,7 @@ int main()
     for (bool play = true; play; )
     {
         rps::game g;
+        rps::symbol sym = rps::io::read_symbol();
         play = io::play_again();
     }
 
