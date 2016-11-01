@@ -8,7 +8,8 @@
 namespace io
 {
 
-    //! choices has to be size() > 1
+    // ask question and read the input until any of the character in choices has been read
+    // choices has to be size() > 1
     char read_one_of(const char* question, const std::vector<char>& choices)
     {
         assert(choices.size() > 1);
@@ -36,6 +37,7 @@ namespace io
     {
         return read_one_of("play again?", {'y', 'n'}) == 'y';
     }
+    
 }
 
 namespace rps
