@@ -1,20 +1,41 @@
 #include <iostream>
 #include <string>
+#include <algorithm>
+#include <cassert>
+#include <vector>
+#include <sstream>
 
 namespace io
 {
-bool play_again()
-{
-    char res{' '};
-    while (res != 'y' && res != 'n')
+
+    //! choices has to be size() > 1
+    char read_one_of(const char* question, const std::vector<char>& choices)
     {
-        std::cout << "play again? [y/n] ";
-        std::cin >> res;
-        res = std::tolower(res);
+        assert(choices.size() > 1);
+
+        char res;
+
+        std::ostringstream oss;
+        for (auto it = choices.begin(); it != choices.end() - 1; ++it)
+            oss << *it << "/";
+
+        oss << choices.back();
+        std::string choice = oss.str();
+
+        do
+        {
+            std::cout << question << " " << choice << " ";
+            std::cin >> res;
+        }
+        while (!std::any_of(std::cbegin(choices), std::cend(choices), [&res](char opt) { return res == opt; }));
+
+        return res;
     }
 
-    return res == 'y';
-}
+    bool play_again()
+    {
+        return read_one_of("play again?", {'y', 'n'}) == 'y';
+    }
 }
 
 namespace rps
@@ -37,6 +58,7 @@ namespace io
 {
     static symbol read_symbol()
     {
+        std::cout << "rock, paper, scissors? [r/p/s] ";
         return {};
     }
 }
@@ -60,7 +82,7 @@ int main()
     for (bool play = true; play; )
     {
         rps::game g;
-        rps::symbol sym = rps::io::read_symbol();
+       // rps::symbol sym = rps::io::read_symbol();
         play = io::play_again();
     }
 
