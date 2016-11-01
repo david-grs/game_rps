@@ -9,6 +9,18 @@
 
 namespace io
 {
+    // better use boost::algorithm::join, but not sure about this dependency
+    static std::string join(const std::vector<char>& strings, char delim)
+    {
+        assert(strings.size() > 1);
+
+        std::ostringstream oss;
+        for (auto it = strings.begin(); it != strings.end() - 1; ++it)
+            oss << *it << delim;
+
+        oss << strings.back();
+        return oss.str();
+    }
 
     // ask question and read the input until any of the character in choices has been read
     // choices has to be size() > 1
@@ -17,17 +29,9 @@ namespace io
         assert(choices.size() > 1);
 
         char res;
-
-        std::ostringstream oss;
-        for (auto it = choices.begin(); it != choices.end() - 1; ++it)
-            oss << *it << "/";
-
-        oss << choices.back();
-        std::string choice = oss.str();
-
         do
         {
-            std::cout << question << " " << choice << " ";
+            std::cout << question << " " << join(choices, '/') << " ";
             std::cin >> res;
         }
         while (!std::any_of(std::cbegin(choices), std::cend(choices), [&res](char opt) { return res == opt; }));
