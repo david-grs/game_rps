@@ -19,13 +19,22 @@ bool play_again()
 namespace rps
 {
 
-enum struct
+enum struct symbol
 {
+    rock,
+    scissors,
+    paper
 };
+
+inline std::ostream& operator<<(std::ostream& oss, symbol sym)
+{
+    // TODO
+    return oss << "?";
+}
 
 struct game
 {
-    
+
 
     int get_scope_ai() const { return _score_ai; }
     int get_scope_hum() const { return _score_hum; }
@@ -41,8 +50,7 @@ int main()
 {
     for (bool play = true; play; )
     {
-        game::rps g;
-        g.
+        rps::game g;
         play = io::play_again();
     }
 
