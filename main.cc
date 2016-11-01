@@ -73,39 +73,31 @@ namespace rps
         }
     }
 
-    static symbol read_symbol()
-    {
-        char s = io::read_one_of("rock, paper, scissors... ?", {'r', 'p', 's'});
-        return to_symbol(s);
-    }
-
     struct game
     {
         game()
          : _gen(_rd()),
-           _rng(0, 3)
+           _rng(0, 2) // generate random numbers in [0-2]
         {}
 
         void play()
         {
-            symbol hum_sym = read_symbol();
+            symbol hum_sym = read_symbol_stdin();
 
-
-            int r = _rng(_gen);
-            std::cout << r << std::endl;
-             r = _rng(_gen);
-            std::cout << r << std::endl;
-             r = _rng(_gen);
-            std::cout << r << std::endl;
-
-            symbol ai_sym = read_symbol();
+            static const char choices[] = {'r','p','s'};
+            symbol ai_sym = to_symbol(choices[_rng(_gen)]);
         }
-
 
         int get_scope_ai() const { return _score_ai; }
         int get_scope_hum() const { return _score_hum; }
 
     private:
+        static symbol read_symbol_stdin()
+        {
+            char s = io::read_one_of("rock, paper, scissors... ?", {'r', 'p', 's'});
+            return to_symbol(s);
+        }
+
         int _score_ai = 0;
         int _score_hum = 0;
 
